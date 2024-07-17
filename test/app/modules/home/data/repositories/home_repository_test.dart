@@ -37,7 +37,7 @@ main() {
     expect(result.$2.isEmpty, true);
   });
 
-  test('Must return a list of CompanyModel when http client return response with succes', () async {
+  test('Must return a empty list of CompanyModel when http client throws a error', () async {
     // mock
     when(() => httpClient.get(any())).thenThrow(const HttpClientError(
         data: {'message': 'Expired token'}, message: '401 - Authentication invalid', stackTrace: null));
