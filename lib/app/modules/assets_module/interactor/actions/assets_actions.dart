@@ -41,3 +41,13 @@ void filterListFromText(String filter) {
   final list = nodesComputedListState.value.where((e) => e.name.toLowerCase().contains(filter));
   nodesComputedListStateFiltered.value = list.toList();
 }
+
+void filterListFromEnergySensors() {
+  final list = assetsListState.value.where((e) => e.sensorType.toLowerCase().contains("energy"));
+  nodesComputedListStateFiltered.value = list.toList();
+}
+
+void filterListFromCriticalAlert() {
+  final list = assetsListState.value.where((e) => e.status.toLowerCase().contains("alert"));
+  nodesComputedListStateFiltered.value = list.toList();
+}

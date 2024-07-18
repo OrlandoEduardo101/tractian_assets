@@ -1,8 +1,11 @@
 import 'package:asp/asp.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tractian_assets/app/modules/assets_module/interactor/models/node_entity.dart';
 import 'package:tractian_assets/app/shared/widgets/text_input/custom_search_field.dart';
 
+import '../../../shared/widgets/buttons/Selectable_buttons.dart';
+import '../../../shared/widgets/buttons/custom_toggle_button.dart';
 import '../interactor/actions/assets_actions.dart';
 import '../interactor/atoms/assets_atoms.dart';
 import 'widgets/expansible_list_tile.dart';
@@ -36,6 +39,7 @@ class _AssetsPageState extends State<AssetsPage> {
           assetsListState,
           locationsListState,
           nodesComputedListState,
+          nodesComputedListStateFiltered,
           isLoadingState,
           errorMessage,
         ]);
@@ -57,7 +61,7 @@ class _AssetsPageState extends State<AssetsPage> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 30),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             CustomSearchField(
@@ -65,6 +69,24 @@ class _AssetsPageState extends State<AssetsPage> {
               onChanged: (value) {
                 filterListFromText(value);
               },
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 16.0),
+              child: SelectableButtons(
+                onUnselectAll: computeListAction,
+                children: [
+                  CustomToggleButton(
+                    icon: CupertinoIcons.bolt,
+                    text: 'Sensor de Energia',
+                    onPressed: filterListFromEnergySensors,
+                  ),
+                  CustomToggleButton(
+                    icon: Icons.error_outline,
+                    text: 'Crítico',
+                    onPressed: filterListFromCriticalAlert,
+                  ),
+                ],
+              ),
             ),
             if (isLoadingState.value)
               const Center(
