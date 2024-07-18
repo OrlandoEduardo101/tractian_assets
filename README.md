@@ -1,16 +1,13 @@
 # tractian_assets
 
-A new Flutter project.
+This is a [Tractian challenge](https://github.com/tractian/challenges/blob/main/mobile%2FREADME.md)
 
-## Getting Started
+- I used the  [Flutterando MiniCore Pattern](https://github.com/Flutterando/minicore), a Flutter/Dart Architecture proposal inspired by Clean Architecture.
+- For state management pattern I used [Flutterando ASP Pattern](https://github.com/Flutterando/minicore)
+- For dependency injections I used [Auto Injector)[https://pub.dev/documentation/auto_injector/latest/]
+- For navigation I used [Go Router](https://pub.dev/documentation/go_router/latest/go_router/go_router-library.html)
+- For http client I used [UNO](https://github.com/Flutterando/uno)
 
-This project is a starting point for a Flutter application.
+## Demontration GIF:
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![WhatsApp Video 2024-07-17 at 23 27 39 (1)](https://github.com/user-attachments/assets/a059ab78-34e0-42d8-8290-a6c808a63655)
