@@ -1,6 +1,7 @@
 import 'package:asp/asp.dart';
 import 'package:flutter/material.dart';
 import 'package:tractian_assets/app/modules/assets_module/interactor/models/node_entity.dart';
+import 'package:tractian_assets/app/shared/widgets/text_input/custom_search_field.dart';
 
 import '../interactor/actions/assets_actions.dart';
 import '../interactor/atoms/assets_atoms.dart';
@@ -19,7 +20,9 @@ class _AssetsPageState extends State<AssetsPage> {
   void initState() {
     super.initState();
     getAssetsListAction(widget.companyId).whenComplete(() {
-      getLocationListAction(widget.companyId);
+      getLocationListAction(widget.companyId).whenComplete(() {
+        computeListAction();
+      });
     });
   }
 
@@ -32,14 +35,18 @@ class _AssetsPageState extends State<AssetsPage> {
     context.select(() => [
           assetsListState,
           locationsListState,
+          nodesComputedListState,
           isLoadingState,
           errorMessage,
         ]);
-    final List<NodeEntity> listNodes = [
-      ...locationsListState.value,
-      ...assetsListState.value,
-    ];
-    final listNodesNoParents = listNodes.where((value) => value.parentId == null).toList();
+    final List<NodeEntity> listNodes = nodesComputedListStateFiltered.value;
+    final listNodesNoParents = listNodes
+        .where(
+          (value) =>
+              value.parentId == null ||
+              !listNodes.any((element) => value.parentId == element.id || value.locationId == element.id),
+        )
+        .toList();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -53,6 +60,12 @@ class _AssetsPageState extends State<AssetsPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            CustomSearchField(
+              hintText: 'Buscar Ativo ou Local',
+              onChanged: (value) {
+                filterListFromText(value);
+              },
+            ),
             if (isLoadingState.value)
               const Center(
                 child: CircularProgressIndicator.adaptive(),
@@ -77,7 +90,7 @@ class _AssetsPageState extends State<AssetsPage> {
                     final item = listNodesNoParents[index];
                     return ExpansibleListTile(
                       item: item,
-                      listNodes: listNodes,
+                      listNodes: nodesComputedListState.value,
                     );
                   },
                 ),

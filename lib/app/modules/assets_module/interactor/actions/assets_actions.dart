@@ -20,3 +20,24 @@ Future<void> getLocationListAction(String companyId) async {
   errorMessage.value = result.$2;
   isLoadingState.value = false;
 }
+
+void computeListAction() {
+  nodesComputedListState.value = [
+    ...locationsListState.value,
+    ...assetsListState.value,
+  ];
+  nodesComputedListStateFiltered.value = nodesComputedListState.value;
+}
+
+void filterListFromText(String filter) {
+  nodesComputedListState.value = [
+    ...locationsListState.value,
+    ...assetsListState.value,
+  ];
+  if (filter.isEmpty) {
+    nodesComputedListStateFiltered.value = nodesComputedListState.value;
+    return;
+  }
+  final list = nodesComputedListState.value.where((e) => e.name.toLowerCase().contains(filter));
+  nodesComputedListStateFiltered.value = list.toList();
+}
