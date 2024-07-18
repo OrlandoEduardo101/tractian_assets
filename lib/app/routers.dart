@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'modules/home/home_page.dart';
+import 'modules/assets_module/presentation/assets_page.dart';
+import 'modules/home/presentation/home_page.dart';
 import 'modules/splash/splash_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -21,6 +22,12 @@ class Routers {
         path: '/home',
         builder: (context, state) {
           return const HomePage();
+        },
+      ),
+      GoRoute(
+        path: '/assets/:companyId',
+        builder: (context, state) {
+          return AssetsPage(companyId: state.pathParameters['companyId'] ?? '');
         },
       ),
     ],

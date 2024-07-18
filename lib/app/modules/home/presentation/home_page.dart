@@ -1,10 +1,11 @@
 import 'package:asp/asp.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tractian_assets/app/modules/home/interactor/actions/home_actions.dart';
 
-import '../../shared/widgets/img/custom_companies_icon.dart';
-import '../../shared/widgets/img/tractian_logo.dart';
-import 'interactor/atoms/home_atom.dart';
+import '../../../shared/widgets/img/custom_companies_icon.dart';
+import '../../../shared/widgets/img/tractian_logo.dart';
+import '../interactor/atoms/home_atom.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -35,7 +36,6 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: colorScheme.primary,
         title: TractianLogo(
           width: size.width * 0.35,
           colorFilter: colorScheme.primary,
@@ -69,8 +69,10 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (context, index) {
                     final item = companiesListState.value[index];
                     return InkWell(
+                      onTap: () {
+                        context.push('/assets/${item.id}');
+                      },
                       child: Container(
-                        // alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: colorScheme.primary,
                           borderRadius: BorderRadius.circular(8),

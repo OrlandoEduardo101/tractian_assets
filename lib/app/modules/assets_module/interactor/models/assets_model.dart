@@ -4,7 +4,6 @@ import 'node_entity.dart';
 
 class AssetsModel extends NodeEntity {
   AssetsModel({
-    required this.locationId,
     required this.sensorType,
     required this.status,
     required this.gatewayId,
@@ -12,8 +11,8 @@ class AssetsModel extends NodeEntity {
     required super.id,
     required super.name,
     super.parentId,
+    super.locationId,
   });
-  final String locationId;
   final String sensorType;
   final String status;
   final String gatewayId;
