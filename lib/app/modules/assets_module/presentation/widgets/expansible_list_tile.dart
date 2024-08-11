@@ -21,8 +21,7 @@ class _ExpansibleListTileState extends State<ExpansibleListTile> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final itemChilds =
-        widget.listNodes.where((e) => e.parentId == widget.item.id || e.locationId == widget.item.id).toList();
+    final itemChilds = widget.item.children;
     return Column(
       children: [
         if (widget.item is LocationModel)
@@ -42,6 +41,7 @@ class _ExpansibleListTileState extends State<ExpansibleListTile> {
         if (isExpanded)
           Container(
             margin: const EdgeInsets.only(left: 12),
+            padding: const EdgeInsets.fromLTRB(32, 8, 0, 8),
             decoration: BoxDecoration(
               border: !isExpanded
                   ? null
@@ -50,21 +50,16 @@ class _ExpansibleListTileState extends State<ExpansibleListTile> {
                       color: colorScheme.secondaryFixed,
                     )),
             ),
-            child: ListView.separated(
-              padding: const EdgeInsets.fromLTRB(32, 8, 0, 8),
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: itemChilds.length,
-              separatorBuilder: (context, index) => const SizedBox(
-                height: 8,
-              ),
-              itemBuilder: (context, index) {
-                final item = itemChilds[index];
-                return ExpansibleListTile(
-                  item: item,
-                  listNodes: widget.listNodes.toList(),
-                );
-              },
+            child: Column(
+              children: [
+                ...itemChilds.map((child) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      child: ExpansibleListTile(
+                        item: child,
+                        listNodes: widget.listNodes,
+                      ),
+                    )),
+              ],
             ),
           ),
       ],

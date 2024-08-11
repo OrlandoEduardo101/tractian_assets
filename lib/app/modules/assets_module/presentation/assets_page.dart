@@ -44,13 +44,6 @@ class _AssetsPageState extends State<AssetsPage> {
           errorMessage,
         ]);
     final List<NodeEntity> listNodes = nodesComputedListStateFiltered.value;
-    final listNodesNoParents = listNodes
-        .where(
-          (value) =>
-              value.parentId == null ||
-              !listNodes.any((element) => value.parentId == element.id || value.locationId == element.id),
-        )
-        .toList();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -102,19 +95,24 @@ class _AssetsPageState extends State<AssetsPage> {
               )
             else
               Expanded(
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: listNodesNoParents.length,
-                  separatorBuilder: (context, index) => const SizedBox(
-                    height: 8,
-                  ),
-                  itemBuilder: (context, index) {
-                    final item = listNodesNoParents[index];
-                    return ExpansibleListTile(
-                      item: item,
-                      listNodes: nodesComputedListState.value,
-                    );
-                  },
+                child: CustomScrollView(
+                  slivers: [
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final node = nodesComputedListStateFiltered.value[index];
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: ExpansibleListTile(
+                              item: node,
+                              listNodes: nodesComputedListState.value,
+                            ),
+                          );
+                        },
+                        childCount: nodesComputedListStateFiltered.value.length,
+                      ),
+                    ),
+                  ],
                 ),
               ),
           ],
